@@ -3,8 +3,6 @@ package main
 import (
 	"fmt"
 	"image"
-	"image/color"
-	"image/draw"
 	"image/png"
 	"os"
 )
@@ -27,8 +25,8 @@ func main() {
 	height := 480
 
 	m := image.NewRGBA(image.Rect(0, 0, width, height))
-	bg := color.White
-	draw.Draw(m, m.Bounds(), &image.Uniform{bg}, image.Point{0, 0}, draw.Src)
+	// bg := color.White
+	// draw.Draw(m, m.Bounds(), &image.Uniform{bg}, image.Point{0, 0}, draw.Src)
 
 	config := Config{5.0, -1.0, -1.0, 1.0, 1.0, 200, -0.8, 0.156}
 	drawJuliaSet(config, m)
