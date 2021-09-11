@@ -50,10 +50,7 @@ func drawJuliaSet(config Config, image *image.RGBA) {
 				continue
 			}
 
-			// r := math.Log(float64(iteration)) / math.Log(float64(config.MaxIterations)) * 255
-
 			image.Set(i, j, color.RGBA{uint8(iteration), uint8(10 * iteration), 0, 255})
-			//image.Set(i, j, color.RGBA{100, 100, 22, 0})
 		}
 	}
 }
