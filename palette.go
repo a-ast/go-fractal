@@ -1,11 +1,13 @@
 package main
 
-import "image/color"
-
-type Palette struct {
-	colors []color.Color
+type Colour struct {
+	R, G, B int
 }
 
-func (palette Palette) GetColor(position int) color.Color {
+type Palette struct {
+	colors []Colour
+}
+
+func (palette Palette) GetColor(position int) Colour {
 	return palette.colors[position]
 }

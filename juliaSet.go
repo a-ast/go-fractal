@@ -1,10 +1,5 @@
 package main
 
-import (
-	"image"
-	"image/color"
-)
-
 type Config struct {
 	EscapeRadius  float64
 	MinX, MinY    float64
@@ -13,9 +8,9 @@ type Config struct {
 	Imag, Real    float64
 }
 
-func drawJuliaSet(config Config, image *image.RGBA) {
-	width := image.Bounds().Dx()
-	height := image.Bounds().Dy()
+func drawJuliaSet(config Config, space *Space) {
+	width := space.Width
+	height := space.Height
 
 	var widthFactor, heightFactor float64
 
@@ -50,7 +45,7 @@ func drawJuliaSet(config Config, image *image.RGBA) {
 				continue
 			}
 
-			image.Set(i, j, color.RGBA{uint8(iteration), uint8(10 * iteration), 0, 255})
+			space.AddItem(SpaceItem{i, j, float32(iteration) / float32(config.MaxIterations)})
 		}
 	}
 }
