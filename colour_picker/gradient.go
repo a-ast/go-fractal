@@ -1,4 +1,4 @@
-package main
+package colour_picker
 
 import (
 	"math"
@@ -9,7 +9,7 @@ type GradientPoint struct {
 	Color      Colour
 }
 
-func NewGradientPalette(size int, startColour, endColour Colour, middlePoints []GradientPoint) Palette {
+func NewGradientPicker(size int, startColour, endColour Colour, middlePoints []GradientPoint) ColourPicker {
 	colors := make([]Colour, size)
 
 	points := middlePoints
@@ -29,7 +29,7 @@ func NewGradientPalette(size int, startColour, endColour Colour, middlePoints []
 		fromPosition = toPosition
 	}
 
-	return Palette{colors}
+	return ColourPicker{colors}
 }
 
 func interpolate(start, end, position, size int) int {

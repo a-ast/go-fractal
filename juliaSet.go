@@ -1,5 +1,7 @@
 package main
 
+import "github.com/a-ast/go-fractal/space"
+
 type Config struct {
 	EscapeRadius  float64
 	MinX, MinY    float64
@@ -8,9 +10,9 @@ type Config struct {
 	Imag, Real    float64
 }
 
-func drawJuliaSet(config Config, space *Space) {
-	width := space.Width
-	height := space.Height
+func drawJuliaSet(config Config, s *space.Space) {
+	width := s.Width
+	height := s.Height
 
 	var widthFactor, heightFactor float64
 
@@ -45,9 +47,7 @@ func drawJuliaSet(config Config, space *Space) {
 				continue
 			}
 
-			// fmt.Println(iteration, config.MaxIterations)
-
-			space.AddItem(SpaceItem{i, j, float32(iteration) / float32(config.MaxIterations)})
+			s.AddItem(space.SpaceItem{i, j, float32(iteration) / float32(config.MaxIterations)})
 		}
 	}
 }
