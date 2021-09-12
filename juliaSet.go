@@ -45,6 +45,8 @@ func drawJuliaSet(config Config, space *Space) {
 				continue
 			}
 
+			// fmt.Println(iteration, config.MaxIterations)
+
 			space.AddItem(SpaceItem{i, j, float32(iteration) / float32(config.MaxIterations)})
 		}
 	}

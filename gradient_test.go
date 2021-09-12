@@ -6,12 +6,13 @@ import (
 
 func TestNewGradientPalette(t *testing.T) {
 
-	color1 := Colour{0, 0, 0}
-	color2 := Colour{100, 100, 100}
+	start := Colour{0, 0, 0}
+	middle := Colour{100, 100, 100}
+	end := Colour{200, 200, 200}
 
-	palette := NewGradientPalette(1000, color1, color2)
+	palette := NewGradientPalette(1000, start, end, []GradientPoint{{50, middle}})
 
-	got := palette.GetColor(500)
+	got := palette.GetColor(250)
 	want := Colour{50, 50, 50}
 
 	if got != want {
