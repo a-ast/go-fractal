@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/a-ast/go-fractal/colour_picker"
+	"github.com/a-ast/go-fractal/fractal"
 	"github.com/a-ast/go-fractal/space"
 )
 
@@ -52,8 +53,8 @@ func main() {
 
 	space := space.NewSpace(width, height)
 
-	config := Config{3.0, -1.0, -1.0, 1.0, 1.0, 100, 0.8, 0}
-	drawJuliaSet(config, &space)
+	config := fractal.Config{3.0, -1.0, -1.0, 1.0, 1.0, 100, 0.8, 0}
+	fractal.DrawJuliaSet(config, &space)
 
 	palette := colour_picker.NewGradientPicker(1000,
 		colour_picker.Colour{0, 0, 0},

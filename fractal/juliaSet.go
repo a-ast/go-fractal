@@ -1,4 +1,4 @@
-package main
+package fractal
 
 import "github.com/a-ast/go-fractal/space"
 
@@ -10,7 +10,7 @@ type Config struct {
 	Imag, Real    float64
 }
 
-func drawJuliaSet(config Config, s *space.Space) {
+func DrawJuliaSet(config Config, s *space.Space) {
 	width := s.Width
 	height := s.Height
 
