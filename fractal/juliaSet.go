@@ -1,53 +1,55 @@
 package fractal
 
-import "github.com/a-ast/go-fractal/space"
-
-type Config struct {
-	EscapeRadius  float64
-	MinX, MinY    float64
-	MaxX, MaxY    float64
-	MaxIterations int
-	Imag, Real    float64
+type FloatPoint struct {
+	X, Y float64
 }
 
-func DrawJuliaSet(config Config, s *space.Space) {
-	width := s.Width
-	height := s.Height
+type JuliaSet struct {
+	Size          Size
+	Complex       complex64
+	EscapeRadius  float32
+	MaxIterations int
+	Scale         float32
+	FocalPoint    FloatPoint
+}
 
-	var widthFactor, heightFactor float64
+func (fractal JuliaSet) Render(items chan SpaceItem) {
 
-	widthFactor = 1 / float64(width-1)
-	heightFactor = 1 / float64(height-1)
-
-	limit := config.EscapeRadius * config.EscapeRadius
+	limit := fractal.EscapeRadius * fractal.EscapeRadius
 
 	var iteration int
-	var x, y, z0, z1 float64
+	var x, y float32
 
-	for i := 0; i < width; i++ {
-		for j := 0; j < height; j++ {
-			x = config.MinX + float64(i)*((config.MaxX-config.MinX)*widthFactor)
-			y = config.MinY + float64(j)*((config.MaxX-config.MinX)*heightFactor)
+	widthScale := fractal.Scale
+	heightScale := fractal.Scale * float32(fractal.Size.Width) / float32(fractal.Size.Height)
 
+	if fractal.Size.Width > fractal.Size.Height {
+		heightScale = 1 / heightScale
+	}
+
+	for i := 0; i < fractal.Size.Width; i++ {
+		for j := 0; j < fractal.Size.Height; j++ {
 			iteration = 0
-			z0 = x
-			z1 = y
+			x = interpolate(-widthScale, widthScale, i+int(fractal.FocalPoint.X), fractal.Size.Width)    //- config.FocalPoint.X
+			y = interpolate(-heightScale, heightScale, j+int(fractal.FocalPoint.Y), fractal.Size.Height) //- config.FocalPoint.Y
 
-			for x*x+y*y < limit && iteration <= config.MaxIterations {
-				z1 = 2*z0*z1 + config.Imag
-				z0 = x*x - y*y + config.Real
-
-				x = z0
-				y = z1
+			for x*x+y*y < limit && iteration <= fractal.MaxIterations {
+				x, y = x*x-y*y+real(fractal.Complex), 2*x*y+imag(fractal.Complex)
 
 				iteration++
 			}
 
-			if iteration > config.MaxIterations {
+			if iteration > fractal.MaxIterations {
 				continue
 			}
 
-			s.AddItem(space.SpaceItem{i, j, float32(iteration) / float32(config.MaxIterations)})
+			items <- SpaceItem{i, j, float32(iteration) / float32(fractal.MaxIterations)}
 		}
 	}
+
+	close(items)
+}
+
+func interpolate(start, end float32, position, size int) float32 {
+	return start + float32(position)*(end-start)/float32(size)
 }

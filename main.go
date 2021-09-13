@@ -9,7 +9,6 @@ import (
 
 	"github.com/a-ast/go-fractal/colour_picker"
 	"github.com/a-ast/go-fractal/fractal"
-	"github.com/a-ast/go-fractal/space"
 )
 
 func SavePng(filename string, image image.Image) {
@@ -48,13 +47,8 @@ func SavePalette(filename string, picker colour_picker.ColourPicker) {
 
 func main() {
 
-	width := 1640
-	height := 1480
-
-	space := space.NewSpace(width, height)
-
-	config := fractal.Config{3.0, -1.0, -1.0, 1.0, 1.0, 100, 0.8, 0}
-	fractal.DrawJuliaSet(config, &space)
+	width := 1600
+	height := 800
 
 	palette := colour_picker.NewGradientPicker(1000,
 		colour_picker.Colour{0, 0, 0},
@@ -65,16 +59,29 @@ func main() {
 		},
 	)
 
-	image := image.NewRGBA(image.Rect(0, 0, width, height))
+	juliaSet := fractal.JuliaSet{
+		Size:          fractal.Size{width, height},
+		Complex:       0 + 0.8i,
+		EscapeRadius:  3.0,
+		MaxIterations: 100,
+		Scale:         1,
+		FocalPoint:    fractal.FloatPoint{50, 0},
+	}
 
-	for _, item := range space.Items {
+	items := make(chan fractal.SpaceItem, width*height)
+	go juliaSet.Render(items)
+
+	SavePalette("img/palette.png", palette)
+
+	image2 := image.NewRGBA(image.Rect(0, 0, width, height))
+
+	for item := range items {
 		paletteColour := palette.Pick(int(1000 * item.Value))
 
 		colour := color.RGBA{uint8(paletteColour.R), uint8(paletteColour.G), uint8(paletteColour.B), 255}
-		image.Set(item.X, item.Y, colour)
+		image2.Set(item.X, item.Y, colour)
 	}
 
-	SavePalette("img/palette.png", palette)
-	SavePng("img/fractal.png", image)
-	fmt.Println("Finished!")
+	SavePng("img/fractal-a.png", image2)
+	fmt.Println("Finished Async!")
 }
