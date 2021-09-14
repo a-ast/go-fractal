@@ -4,7 +4,7 @@ type Size struct {
 	Width, Height int
 }
 
-type SpaceItem struct {
+type Element struct {
 	X, Y  int
 	Value float32
 }
