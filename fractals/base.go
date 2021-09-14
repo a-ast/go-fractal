@@ -1,4 +1,4 @@
-package fractal
+package fractals
 
 type Size struct {
 	Width, Height int

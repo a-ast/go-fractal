@@ -1,4 +1,4 @@
-package fractal
+package fractals
 
 type FloatPoint struct {
 	X, Y float32

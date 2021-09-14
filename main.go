@@ -8,7 +8,7 @@ import (
 	"os"
 
 	"github.com/a-ast/go-fractal/colour_picker"
-	"github.com/a-ast/go-fractal/fractal"
+	"github.com/a-ast/go-fractal/fractals"
 )
 
 func SavePng(filename string, image image.Image) {
@@ -61,16 +61,16 @@ func main() {
 
 	SavePalette("img/palette.png", colourPicker)
 
-	juliaSet := fractal.JuliaSet{
-		Size:          fractal.Size{width, height},
+	juliaSet := fractals.JuliaSet{
+		Size:          fractals.Size{width, height},
 		Complex:       0 + 0.8i,
 		EscapeRadius:  3.0,
 		MaxIterations: 100,
-		Scale:         50,
-		FocalPoint:    fractal.FloatPoint{0, 0},
+		Scale:         1,
+		FocalPoint:    fractals.FloatPoint{0, 0},
 	}
 
-	items := make(chan fractal.Element, width*height)
+	items := make(chan fractals.Element, width*height)
 	go juliaSet.Render(items)
 
 	image := image.NewRGBA(image.Rect(0, 0, width, height))
