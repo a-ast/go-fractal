@@ -9,8 +9,8 @@ import (
 
 func main() {
 
-	width := 1600
-	height := 800
+	width := 200
+	height := 200
 
 	colourPicker := colour_picker.ArcticSun
 
@@ -19,14 +19,14 @@ func main() {
 		Complex:       0 + 0.8i,
 		EscapeRadius:  3.0,
 		MaxIterations: 100,
-		Scale:         1,
-		FocalPoint:    fractals.FloatPoint{0, 0},
+		Zoom:          1,
+		Center:        fractals.FloatPoint{0, 0},
 	}
 
 	items := make(chan fractals.Element, width*height)
 	go juliaSet.Render(items)
 
-	SaveItemsToFile(items, "img/fractal.png", juliaSet.Size, colourPicker)
+	SaveItemsToFile(items, fmt.Sprintf("img/%v.png", juliaSet.Zoom), juliaSet.Size, colourPicker)
 
 	fmt.Println("Finished Async!")
 }

@@ -13,3 +13,4 @@
 
 img/
 *.code-workspace
+.DS_Store

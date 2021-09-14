@@ -1,32 +1,30 @@
 package fractals
 
-type FloatPoint struct {
-	X, Y float32
-}
-
 type JuliaSet struct {
 	Size          Size
 	Complex       complex64
 	EscapeRadius  float32
 	MaxIterations int
-	Scale         float32
-	FocalPoint    FloatPoint
+	Zoom          float32
+	Center        FloatPoint
 }
 
 func (fractal JuliaSet) Render(items chan Element) {
 	var iteration int
-	var x, y float32
+	var p FloatPoint
 
-	widthScale, heightScale := fractal.sizeScales()
+	window := fractal.calculateWindow()
 
 	for i := 0; i < fractal.Size.Width; i++ {
 		for j := 0; j < fractal.Size.Height; j++ {
 			iteration = 0
+			p = fractal.scaleToWindow(i, j, window)
 
-			x, y = fractal.scaleToSize(i, j, widthScale, heightScale)
-
-			for x*x+y*y < fractal.EscapeRadius*fractal.EscapeRadius && iteration <= fractal.MaxIterations {
-				x, y = x*x-y*y+real(fractal.Complex), 2*x*y+imag(fractal.Complex)
+			for (p.X*p.X)+(p.Y*p.Y) < fractal.EscapeRadius*fractal.EscapeRadius && iteration <= fractal.MaxIterations {
+				p = FloatPoint{
+					X: (p.X * p.X) - (p.Y * p.Y) + real(fractal.Complex),
+					Y: 2*(p.X*p.Y) + imag(fractal.Complex),
+				}
 				iteration++
 			}
 
@@ -37,21 +35,36 @@ func (fractal JuliaSet) Render(items chan Element) {
 	close(items)
 }
 
-func interpolate(start, end float32, position, size int) float32 {
-	return start + float32(position)*(end-start)/float32(size)
+func (fractal JuliaSet) calculateWindow() window {
+	size := fractal.calculateWindowSize()
+
+	return window{
+		FloatPoint{-size.Width, -size.Height},
+		FloatPoint{size.Width, size.Height},
+	}
 }
 
-func (fractal JuliaSet) scaleToSize(i, j int, widthScale, heightScale float32) (float32, float32) {
-	return interpolate(-widthScale, widthScale, i+int(fractal.FocalPoint.X), fractal.Size.Width),
-		interpolate(-heightScale, heightScale, j+int(fractal.FocalPoint.Y), fractal.Size.Height)
+func (fractal JuliaSet) scaleToWindow(i, j int, window window) FloatPoint {
+	return FloatPoint{
+		X: interpolate(window.left.X, window.right.X, i, fractal.Size.Width) + fractal.Center.X,
+		Y: interpolate(window.left.Y, window.right.Y, j, fractal.Size.Height) + fractal.Center.Y,
+	}
 }
 
-func (fractal JuliaSet) sizeScales() (float32, float32) {
+func (fractal JuliaSet) calculateWindowSize() floatSize {
 	if fractal.Size.Width < fractal.Size.Height {
-		return fractal.Scale,
-			fractal.Scale * float32(fractal.Size.Width) / float32(fractal.Size.Height)
+		return floatSize{
+			Width:  1 / fractal.Zoom,
+			Height: 1 / fractal.Zoom * float32(fractal.Size.Width) / float32(fractal.Size.Height),
+		}
 	}
 
-	return fractal.Scale,
-		fractal.Scale * float32(fractal.Size.Height) / float32(fractal.Size.Width)
+	return floatSize{
+		Width:  1 / fractal.Zoom,
+		Height: 1 / fractal.Zoom * float32(fractal.Size.Height) / float32(fractal.Size.Width),
+	}
+}
+
+func interpolate(start, end float32, position, size int) float32 {
+	return start + float32(position)*(end-start)/float32(size)
 }

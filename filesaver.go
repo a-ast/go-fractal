@@ -20,6 +20,14 @@ func SaveItemsToFile(items chan fractals.Element, filename string, size fractals
 		image.Set(item.X, item.Y, colour)
 	}
 
+	c1, c2 := size.Width/2, size.Height/2
+	image.Set(c1, c2, color.RGBA{255, 0, 0, 255})
+
+	image.Set(c1-1, c2-1, color.RGBA{255, 0, 0, 255})
+	image.Set(c1-1, c2+1, color.RGBA{255, 0, 0, 255})
+	image.Set(c1+1, c2-1, color.RGBA{255, 0, 0, 255})
+	image.Set(c1+1, c2+1, color.RGBA{255, 0, 0, 255})
+
 	savePng(filename, image)
 }
 
