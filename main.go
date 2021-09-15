@@ -9,12 +9,12 @@ import (
 
 func main() {
 
-	width := 1600
-	height := 800
+	width := 800
+	height := 400
 
-	colourPicker := colour_picker.ArcticSun
+	colourPicker := colour_picker.Electro
 
-	fractal, err := build("julia", width, height)
+	fractal, err := build("mandelbrot", width, height)
 	if err != nil {
 		panic(err)
 	}
@@ -22,7 +22,7 @@ func main() {
 	items := make(chan fractals.Element, width*height)
 	go fractal.Render(items)
 
-	SaveItemsToFile(items, "img/fractal.png", width, height, colourPicker)
+	SaveItemsToFile(items, "img/fractal.png", width, height, colourPicker, false)
 
 	fmt.Println("Finished Async!")
 }

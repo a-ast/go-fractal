@@ -2,6 +2,10 @@
 
 A simple golang script to draw julia/mandelbrot fractals.
 
-Result:
+### Julia Set
 
-![Julia set](docs/fractal.png)
+![Julia set](docs/julia-set.png)
+
+### Mandelbrot Set
+
+![Mandelbrot set](docs/mandelbrot-set.png)

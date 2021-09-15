@@ -1,7 +1,7 @@
 # TO DO
 
-1. Introduce own Colour struct to abstract from image/color and simplify calculations
-2. Introduce 3-point interpolation
+1. API to generate
+2. Simplify colour picker by assuming that end and start are black and fill only from gradientPoints
 3. Spline?
 4. GIF?
 5. More fractals?
