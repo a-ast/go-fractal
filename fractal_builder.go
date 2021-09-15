@@ -12,7 +12,7 @@ func build(fractalType string, width, height int) (fractals.Fractal, error) {
 		return fractals.JuliaSet{
 			Canvas: fractals.Canvas{
 				Size:   fractals.Size{width, height},
-				Zoom:   1000,
+				Zoom:   1,
 				Center: fractals.FloatPoint{0, 0},
 			},
 			Complex:       0 + 0.8i,
@@ -24,8 +24,8 @@ func build(fractalType string, width, height int) (fractals.Fractal, error) {
 		return fractals.MandelbrotSet{
 			Canvas: fractals.Canvas{
 				Size:   fractals.Size{width, height},
-				Zoom:   1,
-				Center: fractals.FloatPoint{0, 0},
+				Zoom:   0.5,
+				Center: fractals.FloatPoint{-1, 0},
 			},
 			Complex:       0 + 0.8i,
 			EscapeRadius:  3.0,
