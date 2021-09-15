@@ -9,26 +9,20 @@ import (
 
 func main() {
 
-	width := 200
-	height := 200
+	width := 1600
+	height := 800
 
 	colourPicker := colour_picker.ArcticSun
 
-	juliaSet := fractals.JuliaSet{
-		Canvas: fractals.Canvas{
-			Size:   fractals.Size{width, height},
-			Zoom:   1,
-			Center: fractals.FloatPoint{0, 0},
-		},
-		Complex:       0 + 0.8i,
-		EscapeRadius:  3.0,
-		MaxIterations: 100,
+	fractal, err := build("julia", width, height)
+	if err != nil {
+		panic(err)
 	}
 
 	items := make(chan fractals.Element, width*height)
-	go juliaSet.Render(items)
+	go fractal.Render(items)
 
-	SaveItemsToFile(items, fmt.Sprintf("img/%v.png", juliaSet.Canvas.Zoom), juliaSet.Canvas.Size, colourPicker)
+	SaveItemsToFile(items, "img/fractal.png", width, height, colourPicker)
 
 	fmt.Println("Finished Async!")
 }

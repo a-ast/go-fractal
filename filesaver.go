@@ -10,8 +10,8 @@ import (
 	"github.com/a-ast/go-fractal/fractals"
 )
 
-func SaveItemsToFile(items chan fractals.Element, filename string, size fractals.Size, picker cp.ColourPicker) {
-	image := image.NewRGBA(image.Rect(0, 0, size.Width, size.Height))
+func SaveItemsToFile(items chan fractals.Element, filename string, width, height int, picker cp.ColourPicker) {
+	image := image.NewRGBA(image.Rect(0, 0, width, height))
 
 	for item := range items {
 		paletteColour := picker.Pick(int(1000 * item.Value))
@@ -20,7 +20,7 @@ func SaveItemsToFile(items chan fractals.Element, filename string, size fractals
 		image.Set(item.X, item.Y, colour)
 	}
 
-	c1, c2 := size.Width/2, size.Height/2
+	c1, c2 := width/2, height/2
 	image.Set(c1, c2, color.RGBA{255, 0, 0, 255})
 
 	image.Set(c1-1, c2-1, color.RGBA{255, 0, 0, 255})

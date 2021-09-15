@@ -11,8 +11,9 @@ type Canvas struct {
 	Center FloatPoint
 }
 
-// type Fractal interface {
-// }
+type Fractal interface {
+	Render(items chan Element)
+}
 
 type Size struct {
 	Width, Height int
