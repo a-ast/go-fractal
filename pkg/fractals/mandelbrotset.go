@@ -16,7 +16,6 @@ func (fractal MandelbrotSet) Render(items chan Element) {
 
 	for i := 0; i < fractal.Canvas.Size.Width; i++ {
 		for j := 0; j < fractal.Canvas.Size.Height; j++ {
-			// maybe another formula?
 			c = fractal.Canvas.scaleToWindow(i, j, window)
 			z = FloatPoint{0, 0}
 

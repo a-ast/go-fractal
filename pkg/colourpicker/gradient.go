@@ -1,4 +1,4 @@
-package colour_picker
+package colourpicker
 
 import (
 	"math"

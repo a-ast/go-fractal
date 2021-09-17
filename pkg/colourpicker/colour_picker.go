@@ -1,4 +1,4 @@
-package colour_picker
+package colourpicker
 
 type Colour struct {
 	R, G, B int

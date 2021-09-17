@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/a-ast/go-fractal/colour_picker"
-	"github.com/a-ast/go-fractal/fractals"
+	"github.com/a-ast/go-fractal/pkg/colourpicker"
+	"github.com/a-ast/go-fractal/pkg/fractals"
 )
 
 func main() {
@@ -12,9 +12,9 @@ func main() {
 	width := 800
 	height := 400
 
-	colourPicker := colour_picker.Electro
+	colourPicker := colourpicker.Electro
 
-	fractal, err := build("mandelbrot", width, height)
+	fractal, err := fractals.New("mandelbrot", width, height)
 	if err != nil {
 		panic(err)
 	}
