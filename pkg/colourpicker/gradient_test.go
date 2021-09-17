@@ -18,5 +18,4 @@ func TestNewGradientPalette(t *testing.T) {
 	if got != want {
 		t.Fatalf(`Got %q, want %q`, got, want)
 	}
-
 }
