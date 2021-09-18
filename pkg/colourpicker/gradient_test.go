@@ -6,11 +6,13 @@ import (
 
 func TestNewGradientPalette(t *testing.T) {
 
-	start := Colour{0, 0, 0}
 	middle := Colour{100, 100, 100}
 	end := Colour{200, 200, 200}
 
-	picker := NewGradientPicker(1000, start, end, []GradientPoint{{50, middle}})
+	picker := NewGradientPicker(1000, []GradientPoint{
+		{50, middle},
+		{100, end},
+	})
 
 	got := picker.Pick(250)
 	want := Colour{50, 50, 50}

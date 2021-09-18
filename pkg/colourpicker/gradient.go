@@ -9,13 +9,12 @@ type GradientPoint struct {
 	Color      Colour
 }
 
-func NewGradientPicker(size int, startColour, endColour Colour, middlePoints []GradientPoint) ColourPicker {
+func NewGradientPicker(size int, points []GradientPoint) ColourPicker {
 	colors := make([]Colour, size)
 
-	points := middlePoints
-	points = append(points, GradientPoint{100, endColour})
+	points = append(points, GradientPoint{100, Colour{0, 0, 0}})
 
-	fromColour := startColour
+	fromColour := Colour{0, 0, 0}
 	fromPosition := 0
 
 	for _, point := range points {

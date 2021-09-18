@@ -21,7 +21,7 @@ func getFractal(w http.ResponseWriter, r *http.Request) {
 	width := query.GetInt("w", 800)
 	height := query.GetInt("h", 400)
 	zoom := query.GetFloat("z", 1.0)
-	cx := query.GetFloat("cx", -1.0)
+	cx := query.GetFloat("cx", 0)
 	cy := query.GetFloat("cy", 0)
 	re := query.GetFloat("re", 0)
 	im := query.GetFloat("im", 0.8)
