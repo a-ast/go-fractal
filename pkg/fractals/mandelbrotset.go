@@ -4,7 +4,6 @@ type MandelbrotSet struct {
 	Canvas        Canvas
 	EscapeRadius  float32
 	MaxIterations int
-	Center        FloatPoint
 }
 
 func (fractal MandelbrotSet) Render(items chan Element) {

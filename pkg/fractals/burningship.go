@@ -4,10 +4,8 @@ import "math"
 
 type BurningShip struct {
 	Canvas        Canvas
-	Complex       complex64
 	EscapeRadius  float32
 	MaxIterations int
-	Center        FloatPoint
 }
 
 func (fractal BurningShip) Render(items chan Element) {

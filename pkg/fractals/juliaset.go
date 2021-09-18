@@ -5,7 +5,6 @@ type JuliaSet struct {
 	Complex       complex64
 	EscapeRadius  float32
 	MaxIterations int
-	Center        FloatPoint
 }
 
 func (fractal JuliaSet) Render(items chan Element) {
