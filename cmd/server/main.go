@@ -14,19 +14,34 @@ func main() {
 	handleRequests()
 }
 
+type buildFractal struct {
+	kind   string
+	width  int
+	height int
+	zoom   float32
+	cx     float32
+	cy     float32
+	re     float32
+	im     float32
+	er     float32
+	mi     int
+}
+
 func getFractal(w http.ResponseWriter, r *http.Request) {
 	query := NewQuery(r.URL.Query())
 
-	kind := query.GetString("t", "burningship")
-	width := query.GetInt("w", 800)
-	height := query.GetInt("h", 400)
-	zoom := query.GetFloat("z", 1.0)
-	cx := query.GetFloat("cx", 0)
-	cy := query.GetFloat("cy", 0)
-	re := query.GetFloat("re", 0)
-	im := query.GetFloat("im", 0.8)
-	er := query.GetFloat("er", 3.0)
-	mi := query.GetInt("mi", 100)
+	f := buildFractal{
+		kind:   query.GetString("t", "burningship"),
+		width:  query.GetInt("w", 800),
+		height: query.GetInt("h", 400),
+		zoom:   query.GetFloat("z", 1.0),
+		cx:     query.GetFloat("cx", 0),
+		cy:     query.GetFloat("cy", 0),
+		re:     query.GetFloat("re", 0),
+		im:     query.GetFloat("im", 0.8),
+		er:     query.GetFloat("er", 3.0),
+		mi:     query.GetInt("mi", 100),
+	}
 
 	if query.Error() != "" {
 		http.Error(w, query.Error(), 404)
@@ -41,42 +56,45 @@ func getFractal(w http.ResponseWriter, r *http.Request) {
 		},
 	)
 	canvas := fractals.Canvas{
-		Size:   fractals.Size{width, height},
-		Zoom:   zoom,
-		Center: fractals.FloatPoint{cx, cy},
+		Size:   fractals.Size{f.width, f.height},
+		Zoom:   f.zoom,
+		Center: fractals.FloatPoint{f.cx, f.cy},
 	}
 
 	var fractal fractals.Fractal
 
-	switch kind {
+	switch f.kind {
 	case "julia":
 		fractal = fractals.JuliaSet{
 			Canvas:        canvas,
-			Complex:       complex(re, im),
-			EscapeRadius:  er,
-			MaxIterations: mi,
+			Complex:       complex(f.re, f.im),
+			EscapeRadius:  f.er,
+			MaxIterations: f.mi,
 		}
 	case "mandelbrot":
 		fractal = fractals.MandelbrotSet{
 			Canvas:        canvas,
-			EscapeRadius:  er,
-			MaxIterations: mi,
+			EscapeRadius:  f.er,
+			MaxIterations: f.mi,
 		}
 	// z=5&cx=-1.8&mi=200&er=2
 	case "burningship":
 		fractal = fractals.BurningShip{
 			Canvas:        canvas,
-			EscapeRadius:  er,
-			MaxIterations: mi,
+			EscapeRadius:  f.er,
+			MaxIterations: f.mi,
 		}
+	default:
+		http.Error(w, "unknown fractal type", 404)
+		return
 	}
 
-	items := make(chan fractals.Element, width*height)
+	items := make(chan fractals.Element, f.width*f.height)
 	go fractal.Render(items)
 
 	factory := fractals.ImageFactory{
-		Width:      width,
-		Height:     height,
+		Width:      f.width,
+		Height:     f.height,
 		Picker:     colourPicker,
 		WithCenter: true,
 	}
