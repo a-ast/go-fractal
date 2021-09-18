@@ -2,7 +2,6 @@ package fractals
 
 type MandelbrotSet struct {
 	Canvas        Canvas
-	Complex       complex64
 	EscapeRadius  float32
 	MaxIterations int
 	Center        FloatPoint

@@ -25,7 +25,6 @@ func New(fractalType string, width, height int) (Fractal, error) {
 				Zoom:   0.5,
 				Center: FloatPoint{-1, 0},
 			},
-			Complex:       0 + 0.8i,
 			EscapeRadius:  3.0,
 			MaxIterations: 100,
 		}, nil

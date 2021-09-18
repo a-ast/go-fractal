@@ -17,23 +17,44 @@ func main() {
 func getFractal(w http.ResponseWriter, r *http.Request) {
 	query := NewQuery(r.URL.Query())
 
+	kind := query.GetString("t", "julia")
 	width := query.GetInt("w", 800)
 	height := query.GetInt("h", 400)
+	zoom := query.GetFloat("z", 1.0)
+	cx := query.GetFloat("cx", -1.0)
+	cy := query.GetFloat("cy", 0)
+	re := query.GetFloat("re", 0)
+	im := query.GetFloat("im", 0.8)
+	er := query.GetFloat("er", 3.0)
+	mi := query.GetInt("mi", 100)
 
 	if query.Error() != "" {
-		//io.WriteString(w, query.Error())
-		//
 		http.Error(w, query.Error(), 404)
-		//w.Write(query.Error())
-		//panic(query.Error())
-		//log.Fatal(query.Error())
 	}
 
 	colourPicker := colourpicker.Electro
+	canvas := fractals.Canvas{
+		Size:   fractals.Size{width, height},
+		Zoom:   zoom,
+		Center: fractals.FloatPoint{cx, cy},
+	}
 
-	fractal, err := fractals.New("mandelbrot", width, height)
-	if err != nil {
-		panic(err)
+	var fractal fractals.Fractal
+
+	switch kind {
+	case "julia":
+		fractal = fractals.JuliaSet{
+			Canvas:        canvas,
+			Complex:       complex(re, im),
+			EscapeRadius:  er,
+			MaxIterations: mi,
+		}
+	case "mandelbrot":
+		fractal = fractals.MandelbrotSet{
+			Canvas:        canvas,
+			EscapeRadius:  er,
+			MaxIterations: mi,
+		}
 	}
 
 	items := make(chan fractals.Element, width*height)
