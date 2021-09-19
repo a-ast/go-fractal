@@ -12,8 +12,8 @@ type Query struct {
 	errors []error
 }
 
-func NewQuery(url url.Values) *Query {
-	return &Query{
+func NewQuery(url url.Values) Query {
+	return Query{
 		url:    url,
 		errors: make([]error, 0),
 	}

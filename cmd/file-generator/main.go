@@ -10,7 +10,7 @@ import (
 func main() {
 
 	width := 800
-	height := 400
+	height := 600
 
 	colourPicker := colourpicker.ArcticSun
 
@@ -20,10 +20,9 @@ func main() {
 	}
 
 	items := make(chan fractals.Element, width*height)
-	go fractal.Render(items)
 
+	fractal.Render(items)
 	SaveItemsToFile(items, "img/fractal.png", width, height, colourPicker, false)
-	SavePaletteToFile(colourPicker, "img/palette.png")
 
-	fmt.Println("Finished Async!")
+	fmt.Println("Finished!")
 }

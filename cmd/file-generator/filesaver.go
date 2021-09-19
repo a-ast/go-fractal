@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"image/png"
@@ -10,7 +11,7 @@ import (
 	"github.com/a-ast/go-fractal/pkg/fractals"
 )
 
-func SaveItemsToFile(items chan fractals.Element, filename string, width, height int, picker cp.ColourPicker, withCenter bool) {
+func SaveItemsToFile(items <-chan fractals.Element, filename string, width, height int, picker cp.ColourPicker, withCenter bool) {
 
 	factory := fractals.ImageFactory{
 		Width:      width,
@@ -41,6 +42,7 @@ func savePng(filename string, image image.Image) {
 	f, err := os.Create(filename)
 
 	if err != nil {
+		fmt.Println(err)
 		panic(err)
 	}
 

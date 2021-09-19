@@ -7,7 +7,7 @@ type JuliaSet struct {
 	MaxIterations int
 }
 
-func (fractal JuliaSet) Render(items chan Element) {
+func (fractal JuliaSet) Render(items chan<- Element) {
 	var iteration int
 	var p FloatPoint
 

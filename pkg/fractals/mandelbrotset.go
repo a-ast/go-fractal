@@ -6,7 +6,7 @@ type MandelbrotSet struct {
 	MaxIterations int
 }
 
-func (fractal MandelbrotSet) Render(items chan Element) {
+func (fractal MandelbrotSet) Render(items chan<- Element) {
 	var k int
 	var c, z FloatPoint
 
@@ -29,9 +29,9 @@ func (fractal MandelbrotSet) Render(items chan Element) {
 				}
 			}
 
-			//consider original formula: if k < fractal.MaxIterations {
 			items <- Element{i, j, float32(k) / float32(fractal.MaxIterations)}
 		}
+
 	}
 
 	close(items)

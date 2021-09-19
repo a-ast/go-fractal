@@ -13,7 +13,7 @@ type ImageFactory struct {
 	WithCenter    bool
 }
 
-func (f ImageFactory) FromItems(items chan Element) *image.RGBA {
+func (f ImageFactory) FromItems(items <-chan Element) *image.RGBA {
 	image := image.NewRGBA(image.Rect(0, 0, f.Width, f.Height))
 
 	for item := range items {

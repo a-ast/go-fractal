@@ -8,7 +8,7 @@ type BurningShip struct {
 	MaxIterations int
 }
 
-func (fractal BurningShip) Render(items chan Element) {
+func (fractal BurningShip) Render(items chan<- Element) {
 	var iteration int
 	var xy, p FloatPoint
 
