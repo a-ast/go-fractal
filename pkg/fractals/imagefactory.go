@@ -13,10 +13,10 @@ type ImageFactory struct {
 	WithCenter    bool
 }
 
-func (f ImageFactory) FromItems(items <-chan Element) *image.RGBA {
+func (f ImageFactory) FromItems(items *FractalElements) *image.RGBA {
 	image := image.NewRGBA(image.Rect(0, 0, f.Width, f.Height))
 
-	for item := range items {
+	for _, item := range items.Elements {
 		paletteColour := f.Picker.Pick(int(1000 * item.Value))
 		colour := color.RGBA{uint8(paletteColour.R), uint8(paletteColour.G), uint8(paletteColour.B), 255}
 

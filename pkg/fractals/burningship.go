@@ -8,7 +8,7 @@ type BurningShip struct {
 	MaxIterations int
 }
 
-func (fractal BurningShip) Render(items chan<- Element) {
+func (fractal BurningShip) Render(items *FractalElements) {
 	var iteration int
 	var xy, p FloatPoint
 
@@ -30,9 +30,7 @@ func (fractal BurningShip) Render(items chan<- Element) {
 				iteration++
 			}
 
-			items <- Element{i, j, float32(iteration) / float32(fractal.MaxIterations)}
+			items.Add(Element{i, j, float32(iteration) / float32(fractal.MaxIterations)})
 		}
 	}
-
-	close(items)
 }

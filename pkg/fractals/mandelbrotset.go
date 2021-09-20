@@ -6,7 +6,7 @@ type MandelbrotSet struct {
 	MaxIterations int
 }
 
-func (fractal MandelbrotSet) Render(items chan<- Element) {
+func (fractal MandelbrotSet) Render(items *FractalElements) {
 	var k int
 	var c, z FloatPoint
 
@@ -29,10 +29,8 @@ func (fractal MandelbrotSet) Render(items chan<- Element) {
 				}
 			}
 
-			items <- Element{i, j, float32(k) / float32(fractal.MaxIterations)}
+			items.Add(Element{i, j, float32(k) / float32(fractal.MaxIterations)})
 		}
 
 	}
-
-	close(items)
 }

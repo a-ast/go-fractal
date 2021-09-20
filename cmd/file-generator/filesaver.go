@@ -11,7 +11,7 @@ import (
 	"github.com/a-ast/go-fractal/pkg/fractals"
 )
 
-func SaveItemsToFile(items <-chan fractals.Element, filename string, width, height int, picker cp.ColourPicker, withCenter bool) {
+func SaveItemsToFile(items *fractals.FractalElements, filename string, width, height int, picker cp.ColourPicker, withCenter bool) {
 
 	factory := fractals.ImageFactory{
 		Width:      width,

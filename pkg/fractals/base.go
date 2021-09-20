@@ -5,6 +5,20 @@ type Element struct {
 	Value float32
 }
 
+type FractalElements struct {
+	Elements []Element
+}
+
+func (f *FractalElements) Add(e Element) {
+	f.Elements = append(f.Elements, e)
+}
+
+func NewFractalElements() *FractalElements {
+	elements := make([]Element, 0)
+
+	return &FractalElements{elements}
+}
+
 type Canvas struct {
 	Size   Size
 	Zoom   float32
@@ -12,7 +26,7 @@ type Canvas struct {
 }
 
 type Fractal interface {
-	Render(items chan<- Element)
+	Render(items *FractalElements)
 }
 
 type Size struct {

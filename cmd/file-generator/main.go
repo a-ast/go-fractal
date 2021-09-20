@@ -10,16 +10,16 @@ import (
 func main() {
 
 	width := 800
-	height := 600
+	height := 400
 
 	colourPicker := colourpicker.ArcticSun
 
-	fractal, err := fractals.New("mandelbrot", width, height)
+	fractal, err := fractals.New("julia", width, height)
 	if err != nil {
 		panic(err)
 	}
 
-	items := make(chan fractals.Element, width*height)
+	items := fractals.NewFractalElements()
 
 	fractal.Render(items)
 	SaveItemsToFile(items, "img/fractal.png", width, height, colourPicker, false)

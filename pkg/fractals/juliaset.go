@@ -7,7 +7,7 @@ type JuliaSet struct {
 	MaxIterations int
 }
 
-func (fractal JuliaSet) Render(items chan<- Element) {
+func (fractal JuliaSet) Render(items *FractalElements) {
 	var iteration int
 	var p FloatPoint
 
@@ -26,9 +26,8 @@ func (fractal JuliaSet) Render(items chan<- Element) {
 				iteration++
 			}
 
-			items <- Element{i, j, float32(iteration) / float32(fractal.MaxIterations)}
+			items.Add(Element{i, j, float32(iteration) / float32(fractal.MaxIterations)})
+
 		}
 	}
-
-	close(items)
 }
