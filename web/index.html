@@ -1,0 +1,46 @@
+<head>
+    <script type="text/javascript">
+
+        let animationQueryParameter = "mi";
+        let animationParameter = 1;
+        let animationParameterMax = 500;
+        let animationParameterStep = 1;
+        // let animationQueryParameter = "z";
+        // let animationParameter = 1;
+        // let animationParameterMax = 200;
+        // let animationParameterStep = 0.1;
+        
+        let frame = 0;
+        let prevTime = Date.now();
+        let url = "http://localhost:10000/?t=julia&w=500&h=500&cx=-0.19&" + 
+            animationQueryParameter + "=";
+        
+        var img;
+
+        function draw() {
+        
+            if (animationParameter > animationParameterMax) {
+                return;
+            }
+
+            if (img == undefined) {
+                img = document.getElementById("canvas");    
+            }
+            img.src = url + animationParameter; //.toFixed(2);            
+
+            // animationParameter = 1.1 * animationParameter;       
+            animationParameter += animationParameterStep;       
+
+            time = Date.now();
+            frame++;
+            fps = Math.round((frame * 1000 ) / (time - prevTime));
+
+            console.log(fps);
+        }
+    </script>
+    
+</head>
+
+<body>
+    <img src="http://localhost:10000/?t=julia&mi=1" id="canvas" onload="javascript:draw();">
+</body>
