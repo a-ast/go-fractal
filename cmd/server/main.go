@@ -25,7 +25,7 @@ func getFractal(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	colourPicker := cp.ArcticSun
+	colourPicker := cp.PickerByName(cf.palette)
 
 	canvas := fractals.Canvas{
 		Size:   fractals.Size{cf.width, cf.height},
@@ -46,7 +46,7 @@ func getFractal(w http.ResponseWriter, r *http.Request) {
 		Width:      cf.width,
 		Height:     cf.height,
 		Picker:     colourPicker,
-		WithCenter: true,
+		WithCenter: false,
 	}
 	image := imageFactory.FromItems(items)
 
