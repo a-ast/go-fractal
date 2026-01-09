@@ -16,7 +16,7 @@ type CreateFractal struct {
 
 func newCreateFractalFromQuery(query Query) CreateFractal {
 	return CreateFractal{
-		kind:    query.GetString("t", "burningship"),
+		kind:    query.GetString("t", "mandelbrot"),
 		palette: query.GetString("p", "arcticsun"),
 		width:   query.GetInt("w", 800),
 		height:  query.GetInt("h", 400),
