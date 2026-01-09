@@ -28,9 +28,9 @@ func getFractal(w http.ResponseWriter, r *http.Request) {
 	colourPicker := cp.PickerByName(cf.palette)
 
 	canvas := fractals.Canvas{
-		Size:   fractals.Size{cf.width, cf.height},
+		Size:   fractals.Size{Width: cf.width, Height: cf.height},
 		Zoom:   cf.zoom,
-		Center: fractals.FloatPoint{cf.cx, cf.cy},
+		Center: fractals.FloatPoint{X: cf.cx, Y: cf.cy},
 	}
 
 	fractal, err := NewFractal(canvas, cf)
