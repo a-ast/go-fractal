@@ -27,6 +27,8 @@ go build
 ./server
 ```
 
+Open in browser: http://localhost:10000?cx=-0.3&cy=-0.47&z=0.5
+
 
 ### Url parameters
 
