@@ -1,3 +1,3 @@
 module github.com/a-ast/go-fractal
 
-go 1.17
+go 1.25
