@@ -63,5 +63,32 @@ func writeImage(w http.ResponseWriter, image *image.RGBA) {
 
 func handleRequests() {
 	http.HandleFunc("/", getFractal)
+
+	log.Println(`
+╔═══════════════════════════════════════════════════════════════╗
+║ ✨ Go Fractal Server Started                                  ║
+╠═══════════════════════════════════════════════════════════════╣
+║ 🌐 http://localhost:10000                                     ║
+║                                                               ║
+║ QUERY PARAMETERS:                                             ║
+║ ───────────────────────────────────────────────────────────── ║
+║ t  - Fractal type (default: mandelbrot)                       ║
+║      Options: julia, mandelbrot, burningship                  ║
+║ p  - Colour palette (default: arcticsun)                      ║
+║      Options: arcticsun, electro                              ║
+║ w  - Image width in pixels (default: 800)                     ║
+║ h  - Image height in pixels (default: 400)                    ║
+║ z  - Zoom level (default: 1.0)                                ║
+║ cx - Center X coordinate (default: 0)                         ║
+║ cy - Center Y coordinate (default: 0)                         ║
+║ re - Real part for Julia set (default: 0)                     ║
+║ im - Imaginary part for Julia set (default: 0.8)              ║
+║ er - Escape radius (default: 3.0)                             ║
+║ mi - Maximum iterations (default: 100)                        ║
+║                                                               ║
+║ Example: http://localhost:10000?t=mandelbrot&cx=-0.5&z=0.5    ║
+╚═══════════════════════════════════════════════════════════════╝
+	`)
+
 	log.Fatal(http.ListenAndServe(":10000", nil))
 }
