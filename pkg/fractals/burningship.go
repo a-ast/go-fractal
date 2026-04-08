@@ -8,10 +8,11 @@ type BurningShip struct {
 	MaxIterations int
 }
 
-func (fractal BurningShip) Render(items *FractalElements) {
+func (fractal BurningShip) Render() *FractalElements {
 	var iteration int
 	var xy, p FloatPoint
 
+	items := NewFractalElements()
 	window := fractal.Canvas.calculateWindow()
 
 	for i := 0; i < fractal.Canvas.Size.Width; i++ {
@@ -33,4 +34,6 @@ func (fractal BurningShip) Render(items *FractalElements) {
 			items.Add(Element{i, j, float32(iteration) / float32(fractal.MaxIterations)})
 		}
 	}
+
+	return items
 }

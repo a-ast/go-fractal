@@ -39,8 +39,7 @@ func getFractal(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	items := fractals.NewFractalElements()
-	fractal.Render(items)
+	items := fractal.Render()
 
 	imageFactory := fractals.ImageFactory{
 		Width:      cf.width,

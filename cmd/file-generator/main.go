@@ -19,9 +19,7 @@ func main() {
 		panic(err)
 	}
 
-	items := fractals.NewFractalElements()
-
-	fractal.Render(items)
+	items := fractal.Render()
 	SaveItemsToFile(items, "img/fractal.png", width, height, colourPicker, false)
 
 	fmt.Println("Finished!")

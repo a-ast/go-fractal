@@ -26,7 +26,7 @@ type Canvas struct {
 }
 
 type Fractal interface {
-	Render(items *FractalElements)
+	Render() *FractalElements
 }
 
 type Size struct {
