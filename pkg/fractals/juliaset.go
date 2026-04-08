@@ -1,5 +1,26 @@
 package fractals
 
+func NewJuliaSet(canvas Canvas, c complex64, er float32, mi int) JuliaSet {
+
+	if canvas.Zoom == 0 {
+		canvas.Zoom = 1
+	}
+
+	if imag(c) == 0 {
+		c = complex(real(c), 0.8)
+	}
+
+	if er == 0 {
+		er = 3.0
+	}
+
+	if mi == 0 {
+		mi = 100
+	}
+
+	return JuliaSet{Canvas: canvas, Complex: c, EscapeRadius: er, MaxIterations: mi}
+}
+
 type JuliaSet struct {
 	Canvas        Canvas
 	Complex       complex64

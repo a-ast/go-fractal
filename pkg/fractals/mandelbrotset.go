@@ -1,5 +1,25 @@
 package fractals
 
+func NewMandelbrotSet(canvas Canvas, er float32, mi int) MandelbrotSet {
+	if canvas.Zoom == 0 {
+		canvas.Zoom = 0.5
+	}
+
+	if canvas.Center.X == 0 {
+		canvas.Center.X = -1
+	}
+
+	if er == 0 {
+		er = 3.0
+	}
+
+	if mi == 0 {
+		mi = 100
+	}
+
+	return MandelbrotSet{Canvas: canvas, EscapeRadius: er, MaxIterations: mi}
+}
+
 type MandelbrotSet struct {
 	Canvas        Canvas
 	EscapeRadius  float32

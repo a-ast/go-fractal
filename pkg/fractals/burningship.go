@@ -2,6 +2,26 @@ package fractals
 
 import "math"
 
+func NewBurningShip(canvas Canvas, er float32, mi int) BurningShip {
+	if canvas.Zoom == 0 {
+		canvas.Zoom = 5
+	}
+
+	if canvas.Center.X == 0 {
+		canvas.Center.X = -1.8
+	}
+
+	if er == 0 {
+		er = 2.0
+	}
+
+	if mi == 0 {
+		mi = 200
+	}
+
+	return BurningShip{Canvas: canvas, EscapeRadius: er, MaxIterations: mi}
+}
+
 type BurningShip struct {
 	Canvas        Canvas
 	EscapeRadius  float32

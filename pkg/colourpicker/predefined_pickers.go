@@ -1,21 +1,5 @@
 package colourpicker
 
-var (
-	ArcticSun ColourPicker = NewGradientPicker(1000,
-		[]GradientPoint{
-			{5, Colour{16, 133, 139}},
-			{15, Colour{255, 174, 0}},
-		},
-	)
-
-	Electro ColourPicker = NewGradientPicker(1000,
-		[]GradientPoint{
-			{5, Colour{173, 3, 252}},
-			{15, Colour{3, 244, 252}},
-		},
-	)
-)
-
 func PickerByName(name string) ColourPicker {
 	switch name {
 	case "electro":
@@ -26,7 +10,7 @@ func PickerByName(name string) ColourPicker {
 			},
 		)
 
-	case "jenny":
+	case "past":
 		return NewGradientPicker(1000,
 			[]GradientPoint{
 				{5, Colour{8, 160, 75}},

@@ -18,6 +18,7 @@ func main() {
 func getFractal(w http.ResponseWriter, r *http.Request) {
 
 	query := NewQuery(r.URL.Query())
+	fractalType := query.GetString("t", "mandelbrot")
 	cf := newCreateFractalFromQuery(query)
 
 	if query.Error() != "" {
@@ -25,15 +26,14 @@ func getFractal(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	colourPicker := cp.PickerByName(cf.palette)
-
+	colourPicker := cp.PickerByName(cf.Palette)
 	canvas := fractals.Canvas{
-		Size:   fractals.Size{Width: cf.width, Height: cf.height},
-		Zoom:   cf.zoom,
-		Center: fractals.FloatPoint{X: cf.cx, Y: cf.cy},
+		Size:   fractals.Size{Width: cf.Width, Height: cf.Height},
+		Zoom:   cf.Zoom,
+		Center: fractals.FloatPoint{X: cf.Cx, Y: cf.Cy},
 	}
 
-	fractal, err := NewFractal(canvas, cf)
+	fractal, err := fractals.NewFractal(fractalType, canvas, cf)
 	if err != nil {
 		http.Error(w, err.Error(), 404)
 		return
@@ -42,14 +42,14 @@ func getFractal(w http.ResponseWriter, r *http.Request) {
 	items := fractal.Render()
 
 	imageFactory := fractals.ImageFactory{
-		Width:      cf.width,
-		Height:     cf.height,
+		Width:      cf.Width,
+		Height:     cf.Height,
 		Picker:     colourPicker,
 		WithCenter: false,
 	}
-	image := imageFactory.FromItems(items)
+	img := imageFactory.FromItems(items)
 
-	writeImage(w, image)
+	writeImage(w, img)
 }
 
 func writeImage(w http.ResponseWriter, image *image.RGBA) {
@@ -90,4 +90,19 @@ func handleRequests() {
 	`)
 
 	log.Fatal(http.ListenAndServe(":10000", nil))
+}
+
+func newCreateFractalFromQuery(query Query) fractals.CreateFractal {
+	return fractals.CreateFractal{
+		Palette: query.GetString("p", "arcticsun"),
+		Width:   query.GetInt("w", 800),
+		Height:  query.GetInt("h", 400),
+		Zoom:    query.GetFloat("z", 0),
+		Cx:      query.GetFloat("cx", 0),
+		Cy:      query.GetFloat("cy", 0),
+		Re:      query.GetFloat("re", 0),
+		Im:      query.GetFloat("im", 0.8),
+		Er:      query.GetFloat("er", 0),
+		Mi:      query.GetInt("mi", 0),
+	}
 }
